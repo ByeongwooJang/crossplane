@@ -1,0 +1,45 @@
+apiVersion: containerservice.azure.upbound.io/v1beta1
+kind: KubernetesCluster
+metadata:
+  name: qa-krce-bwjang-log-02-aks
+spec:
+  forProvider:
+    kubernetesVersion: 1.31.2
+    azurePolicyEnabled: true
+    networkProfile:
+      - networkPlugin: azure
+        networkPolicy: azure
+    defaultNodePool:
+      - name: qakrcebwnp
+        nodeCount: 2
+        vmSize: Standard_D2s_v5
+        enableAutoScaling: false
+        onlyCriticalAddonsEnabled: false
+        osDiskType: Managed
+        type: VirtualMachineScaleSets
+        vnetSubnetId: "/subscriptions/e1309911-b426-422a-899e-bf7fabea02a3/resourceGroups/qa-krce-test-bwjang-aks-rg/providers/Microsoft.Network/virtualNetworks/qa-krce-test-bwjang-aks-vnet/subnets/crossplane-aks-subnet"
+        zones:
+        - "1"
+        - "2"
+        - "3"
+    dnsPrefix: qa-uset-gasp-log-aks
+    publicNetworkAccessEnabled: false
+    nodeResourceGroup: qa-krce-bwjang-log-02-aks-rg
+    identity:
+    - identityIds:
+      - /subscriptions/e1309911-b426-422a-899e-bf7fabea02a3/resourceGroups/qa-krce-test-bwjang-aks-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/qa-krce-bwjang-log-aks-02-managed-id
+      type: UserAssigned
+    privateClusterEnabled: true
+    azureActiveDirectoryRoleBasedAccessControl:
+      - adminGroupObjectIds:
+        - 55f4c327-afec-46d8-bdea-55fa72447cc8
+        azureRbacEnabled: false
+        managed: true
+    localAccountDisabled: true
+    oidcIssuerEnabled: true
+    workloadIdentityEnabled: true
+    location: koreacentral
+    skuTier: Standard
+    resourceGroupName: qa-krce-test-bwjang-aks-rg
+  providerConfigRef:
+    name: workload-identity-provider-config
