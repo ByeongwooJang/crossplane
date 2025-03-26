@@ -1,0 +1,11 @@
+apiVersion: managedidentity.azure.upbound.io/v1beta1
+kind: UserAssignedIdentity
+metadata:
+  name: qa-krce-bwjang-log-aks-02-managed-id
+spec:
+  forProvider:
+    location: Korea Central 
+    name: qa-krce-bwjang-log-aks-02-managed-id
+    resourceGroupName: qa-krce-test-bwjang-aks-rg
+  providerConfigRef:
+    name: workload-identity-provider-config
