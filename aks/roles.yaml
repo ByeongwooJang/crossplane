@@ -9,3 +9,15 @@ spec:
     scope: "/subscriptions/e1309911-b426-422a-899e-bf7fabea02a3/resourceGroups/mc_qa-krce-test-bwjang-aks-rg_qa-krce-test-bwjang-aks_koreacentral"
   providerConfigRef:
     name: workload-identity-provider-config
+---
+apiVersion: authorization.azure.upbound.io/v1beta1
+kind: RoleAssignment
+metadata:
+  name: qa-uset-gasp-log-aks-role-subnet
+spec:
+  forProvider:
+    principalId: "eb132b4c-1f6c-4a1a-8e0f-d57bc6a341af"
+    roleDefinitionName: Contributor
+    scope: "/subscriptions/e1309911-b426-422a-899e-bf7fabea02a3/resourceGroups/qa-krce-test-bwjang-aks-rg/providers/Microsoft.Network/virtualNetworks/qa-krce-test-bwjang-aks-vnet/subnets/crossplane-aks-subnet"
+  providerConfigRef:
+    name: workload-identity-provider-config
