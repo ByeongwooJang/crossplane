@@ -16,7 +16,7 @@ metadata:
   name: qa-uset-gasp-log-aks-role-subnet
 spec:
   forProvider:
-    principalId: "eb132b4c-1f6c-4a1a-8e0f-d57bc6a341af"
+    principalId: "22df9410-761b-4375-b46b-54f553a2f6f1"
     roleDefinitionName: Contributor
     scope: "/subscriptions/e1309911-b426-422a-899e-bf7fabea02a3/resourceGroups/qa-krce-test-bwjang-aks-rg/providers/Microsoft.Network/virtualNetworks/qa-krce-test-bwjang-aks-vnet/subnets/crossplane-aks-subnet"
   providerConfigRef:
