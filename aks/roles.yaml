@@ -4,7 +4,7 @@ metadata:
   name: qa-krce-bwjang-log-aks-role-privatedns
 spec:
   forProvider:
-    principalId: "e62a6b7f-3fab-47fc-8629-abfc30b8ed7c"
+    principalId: "22df9410-761b-4375-b46b-54f553a2f6f1"
     roleDefinitionName: Contributor
     scope: "/subscriptions/e1309911-b426-422a-899e-bf7fabea02a3/resourceGroups/mc_qa-krce-test-bwjang-aks-rg_qa-krce-test-bwjang-aks_koreacentral/providers/Microsoft.Network/privateDnsZones"
   providerConfigRef:
