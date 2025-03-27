@@ -34,6 +34,9 @@ spec:
             toFieldPath: "metadata.name"
           - fromFieldPath: "spec.location"
             toFieldPath: "spec.forProvider.location"
+          - type: ToCompositeFieldPath
+            fromFieldPath: status.atProvider.id
+            toFieldPath: status.resourceGroupID
       - name: UserAssignedIdentity
         base:
           apiVersion: managedidentity.azure.upbound.io/v1beta1
@@ -71,7 +74,7 @@ spec:
           - type: ToCompositeFieldPath
             fromFieldPath: status.atProvider.principalId
             toFieldPath: status.principalId
-      - name: RoleAssignment
+      - name: RoleAssignmentForVnet
         base:
           apiVersion: authorization.azure.upbound.io/v1beta1
           kind: RoleAssignment
@@ -94,6 +97,30 @@ spec:
           - type: FromCompositeFieldPath # 생성된 리소스의 status에서 값 뺴오는 방법 -2
             fromFieldPath: status.principalId
             toFieldPath: spec.forProvider.principalId
+      - name: RoleAssignmentForRg
+        base:
+          apiVersion: authorization.azure.upbound.io/v1beta1
+          kind: RoleAssignment
+          spec:
+            providerConfigRef:
+              name: workload-identity-provider-config  
+            forProvider:
+              roleDefinitionName: "Contributor" 
+        patches:
+          - type: CombineFromComposite
+            combine:
+              variables:
+                - fromFieldPath: spec.name
+              strategy: string
+              string:
+                fmt: "%s-role-rg"
+            toFieldPath: "metadata.name"
+          - type: FromCompositeFieldPath # 생성된 리소스의 status에서 값 뺴오는 방법 -2
+            fromFieldPath: status.resourceGroupID
+            toFieldPath: spec.forProvider.scope
+          - type: FromCompositeFieldPath # 생성된 리소스의 status에서 값 뺴오는 방법 -2
+            fromFieldPath: status.principalId
+            toFieldPath: spec.forProvider.principalId
   - step: detect-readiness
     functionRef:
       name: function-auto-ready
@@ -107,7 +134,8 @@ spec:
         - sequence:
           - ResourceGroup
           - UserAssignedIdentity
-          - RoleAssignment
+          - RoleAssignmentForVnet
+          - RoleAssignmentForRg
 # ---
 # apiVersion: example.org/v1alpha1
 # kind: xMyBuckets

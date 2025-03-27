@@ -6,4 +6,5 @@ spec:
   location: Korea Central
   name: qa-krce-test-bwjang-cs
   nodeCount: 2
+  #roleAssignment, aks vnet setting
   vnetid: "/subscriptions/e1309911-b426-422a-899e-bf7fabea02a3/resourceGroups/qa-krce-test-bwjang-aks-rg/providers/Microsoft.Network/virtualNetworks/qa-krce-test-bwjang-aks-vnet/subnets/crossplane-aks-subnet"
