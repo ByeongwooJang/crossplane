@@ -20,6 +20,9 @@ spec:
         base:
           apiVersion: azure.upbound.io/v1beta1
           kind: ResourceGroup
+          spec:
+            providerConfigRef:
+              name: workload-identity-provider-config  
         patches:
           - type: CombineFromComposite
             combine:
