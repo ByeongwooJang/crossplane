@@ -1,0 +1,44 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata: 
+  name: xbwjangkubes.onestore.net
+spec:
+  group: onestore.net
+  names:
+    kind: xbwjangkube
+    plural: xbwjangkubes
+  versions:
+    - name: v1alpha1
+      served: true
+      referenceable: true
+      schema:
+        openAPIV3Schema:
+          description: A ArgocdCluster is a composite resource that represents a K8S Cluster with Wordpress Installed
+          type: object
+          properties:
+            spec:
+              type: object
+              required:
+                - location
+                - name
+                - nodeCount
+              properties:
+                location:
+                  type: string
+                  description: Region
+                name:
+                  type: string
+                  minLength: 3            
+                  maxLength: 20           
+                  pattern: "^[a-z0-9-]+$"
+                  description: Name of the K8S Cluster
+                nodeCount:
+                  type: integer            
+                  description: "Number of nodes in the cluster"
+                  minimum: 1              
+                  maximum: 10             
+                  default: 2
+                enableAutoScaling:
+                  type: boolean            
+                  description: "Enable auto-scaling"
+                  default: true
