@@ -51,6 +51,6 @@ spec:
                 principalId:
                   description: managedIdentityPrincipalID
                   type: string
-                resourcegroupId:
-                  description: resourceGroupID
+                resourceGroupId:
+                  description: resourceGroupId
                   type: string
