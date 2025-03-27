@@ -36,7 +36,7 @@ spec:
             toFieldPath: "spec.forProvider.location"
           - type: ToCompositeFieldPath
             fromFieldPath: status.atProvider.id
-            toFieldPath: status.resourceGroupID
+            toFieldPath: status.resourceGroupId
       - name: UserAssignedIdentity
         base:
           apiVersion: managedidentity.azure.upbound.io/v1beta1
@@ -136,10 +136,3 @@ spec:
           - UserAssignedIdentity
           - RoleAssignmentForVnet
           - RoleAssignmentForRg
-# ---
-# apiVersion: example.org/v1alpha1
-# kind: xMyBuckets
-# metadata:
-#   name: my-buckets
-# spec:
-#   location: Korea Central
