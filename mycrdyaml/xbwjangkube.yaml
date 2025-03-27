@@ -1,0 +1,8 @@
+apiVersion: onestore.net/v1alpha1
+kind: xbwjangkube
+metadata:
+  name: my-kube
+spec:
+  location: Korea Central
+  name: qa-krce-test-bwjang-cs
+  nodeCount: 2
