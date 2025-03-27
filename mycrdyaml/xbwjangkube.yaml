@@ -6,3 +6,5 @@ spec:
   location: Korea Central
   name: qa-krce-test-bwjang-cs
   nodeCount: 2
+  providerConfigRef:
+    name: workload-identity-provider-config
