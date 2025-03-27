@@ -29,7 +29,7 @@ spec:
                 name:
                   type: string
                   minLength: 3            
-                  maxLength: 20           
+                  maxLength: 25           
                   pattern: "^[a-z0-9-]+$"
                   description: Name of the K8S Cluster
                 nodeCount:
