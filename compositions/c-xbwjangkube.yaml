@@ -105,6 +105,7 @@ spec:
         - sequence:
           - ResourceGroup
           - UserAssignedIdentity
+          - RoleAssignment
 # ---
 # apiVersion: example.org/v1alpha1
 # kind: xMyBuckets
