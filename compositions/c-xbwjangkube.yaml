@@ -61,7 +61,7 @@ spec:
           - type: CombineFromComposite
             combine:
               variables:
-                - fromFieldPath: metadata.name
+                - fromFieldPath: spec.name
               strategy: string
               string:
                 fmt: "%s-rg"
