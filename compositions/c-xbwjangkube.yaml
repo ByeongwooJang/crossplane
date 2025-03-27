@@ -34,37 +34,37 @@ spec:
             toFieldPath: "metadata.name"
           - fromFieldPath: "spec.location"
             toFieldPath: "spec.forProvider.location"
-      # - name: UserAssignedIdentity
-      #   base:
-      #     apiVersion: managedidentity.azure.upbound.io/v1beta1
-      #     kind: UserAssignedIdentity
-      #   patches:
-      #     - type: CombineFromComposite
-      #       combine:
-      #         variables:
-      #           - fromFieldPath: metadata.name
-      #         strategy: string
-      #         string:
-      #           fmt: "%s-managed-id"
-      #       toFieldPath: "metadata.name"
-      #     - type: CombineFromComposite
-      #       combine:
-      #         variables:
-      #           - fromFieldPath: metadata.name
-      #         strategy: string
-      #         string:
-      #           fmt: "%s-managed-id"
-      #       toFieldPath: "spec.forProvider.name"
-      #     - type: CombineFromComposite
-      #       combine:
-      #         variables:
-      #           - fromFieldPath: metadata.name
-      #         strategy: string
-      #         string:
-      #           fmt: "%s-rg"
-      #       toFieldPath: "spec.forProvider.resourceGroupName"
-      #     - fromFieldPath: "spec.location"
-      #       toFieldPath: "spec.forProvider.location"
+      - name: UserAssignedIdentity
+        base:
+          apiVersion: managedidentity.azure.upbound.io/v1beta1
+          kind: UserAssignedIdentity
+        patches:
+          - type: CombineFromComposite
+            combine:
+              variables:
+                - fromFieldPath: spec.name
+              strategy: string
+              string:
+                fmt: "%s-managed-id"
+            toFieldPath: "metadata.name"
+          - type: CombineFromComposite
+            combine:
+              variables:
+                - fromFieldPath: spec.name
+              strategy: string
+              string:
+                fmt: "%s-managed-id"
+            toFieldPath: "spec.forProvider.name"
+          - type: CombineFromComposite
+            combine:
+              variables:
+                - fromFieldPath: metadata.name
+              strategy: string
+              string:
+                fmt: "%s-rg"
+            toFieldPath: "spec.forProvider.resourceGroupName"
+          - fromFieldPath: "spec.location"
+            toFieldPath: "spec.forProvider.location"
   - step: detect-readiness
     functionRef:
       name: function-auto-ready
@@ -77,7 +77,7 @@ spec:
       rules:
         - sequence:
           - ResourceGroup
-          # - UserAssignedIdentity
+          - UserAssignedIdentity
 # ---
 # apiVersion: example.org/v1alpha1
 # kind: xMyBuckets
