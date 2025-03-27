@@ -89,7 +89,7 @@ spec:
               string:
                 fmt: "%s-role-subnet"
             toFieldPath: "metadata.name"
-          - fromFieldPath: "spec.scope"
+          - fromFieldPath: "spec.vnetid"
             toFieldPath: "spec.forProvider.scope"
           - type: FromCompositeFieldPath # 생성된 리소스의 status에서 값 뺴오는 방법 -2
             fromFieldPath: status.principalId
