@@ -72,6 +72,9 @@ spec:
           - fromFieldPath: "spec.location"
             toFieldPath: "spec.forProvider.location"
           - type: ToCompositeFieldPath
+            fromFieldPath: status.atProvider.id
+            toFieldPath: status.managedIdentityId
+          - type: ToCompositeFieldPath
             fromFieldPath: status.atProvider.principalId
             toFieldPath: status.principalId
       - name: RoleAssignmentForSubnet
