@@ -23,7 +23,7 @@ spec:
                 - name
                 - nodeCount
               properties:
-                vnetid:
+                subnetid:
                   type: string
                   description: testScope
                 location:
