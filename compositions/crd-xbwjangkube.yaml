@@ -23,6 +23,9 @@ spec:
                 - name
                 - nodeCount
               properties:
+                scope:
+                  type: string
+                  description: testScope
                 location:
                   type: string
                   description: Region
@@ -42,3 +45,9 @@ spec:
                   type: boolean            
                   description: "Enable auto-scaling"
                   default: true
+            status:
+              type: object
+              properties:
+                principalId:
+                  description: managedIdentityPrincipalID
+                  type: string

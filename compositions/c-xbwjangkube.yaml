@@ -68,6 +68,30 @@ spec:
             toFieldPath: "spec.forProvider.resourceGroupName"
           - fromFieldPath: "spec.location"
             toFieldPath: "spec.forProvider.location"
+          - type: ToCompositeFieldPath
+            fromFieldPath: status.atProvider.principalId
+            toFieldPath: status.principalId
+      - name: RoleAssignment
+        base:
+          apiVersion: authorization.azure.upbound.io/v1beta1
+          kind: RoleAssignment
+          spec:
+            providerConfigRef:
+              name: workload-identity-provider-config  
+        patches:
+          - type: CombineFromComposite
+            combine:
+              variables:
+                - fromFieldPath: spec.name
+              strategy: string
+              string:
+                fmt: "%s-role-subnet"
+            toFieldPath: "metadata.name"
+          - type: FromCompositeFieldPath
+            fromFieldPath: status.principalId
+            toFieldPath: spec.forProvider.principalId
+          - fromFieldPath: "spec.scope"
+            toFieldPath: "spec.forProvider.scope"
   - step: detect-readiness
     functionRef:
       name: function-auto-ready
