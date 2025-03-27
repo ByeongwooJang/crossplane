@@ -45,7 +45,7 @@ spec:
                   type: boolean            
                   description: "Enable auto-scaling"
                   default: true
-            status:
+            status: # 생성된 리소스의 status에서 값 뺴오는 방법 -1 
               type: object
               properties:
                 principalId:
