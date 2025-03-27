@@ -1,0 +1,84 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: xbwjangkube-comp
+  namespace: crossplane-system
+spec:
+  compositeTypeRef:
+    apiVersion: onestore.net/v1alpha1
+    kind: xbwjangkube
+  mode: Pipeline
+  pipeline:
+  - step: patch-and-transform
+    functionRef:
+      name: function-patch-and-transform
+    input:
+      apiVersion: pt.fn.crossplane.io/v1beta1
+      kind: Resources
+      resources:
+      - name: ResourceGroup
+        base:
+          apiVersion: azure.upbound.io/v1beta1
+          kind: ResourceGroup
+        patches:
+          - type: CombineFromComposite
+            combine:
+              variables:
+                - fromFieldPath: metadata.name
+              strategy: string
+              string:
+                fmt: "%s-rg"
+            toFieldPath: "metadata.name"
+          - fromFieldPath: "spec.location"
+            toFieldPath: "spec.forProvider.location"
+      # - name: UserAssignedIdentity
+      #   base:
+      #     apiVersion: managedidentity.azure.upbound.io/v1beta1
+      #     kind: UserAssignedIdentity
+      #   patches:
+      #     - type: CombineFromComposite
+      #       combine:
+      #         variables:
+      #           - fromFieldPath: metadata.name
+      #         strategy: string
+      #         string:
+      #           fmt: "%s-managed-id"
+      #       toFieldPath: "metadata.name"
+      #     - type: CombineFromComposite
+      #       combine:
+      #         variables:
+      #           - fromFieldPath: metadata.name
+      #         strategy: string
+      #         string:
+      #           fmt: "%s-managed-id"
+      #       toFieldPath: "spec.forProvider.name"
+      #     - type: CombineFromComposite
+      #       combine:
+      #         variables:
+      #           - fromFieldPath: metadata.name
+      #         strategy: string
+      #         string:
+      #           fmt: "%s-rg"
+      #       toFieldPath: "spec.forProvider.resourceGroupName"
+      #     - fromFieldPath: "spec.location"
+      #       toFieldPath: "spec.forProvider.location"
+  - step: detect-readiness
+    functionRef:
+      name: function-auto-ready
+  - step: sequence-creation
+    functionRef:
+      name: function-sequencer
+    input:
+      apiVersion: sequencer.fn.crossplane.io/v1beta1
+      kind: Input
+      rules:
+        - sequence:
+          - ResourceGroup
+          # - UserAssignedIdentity
+# ---
+# apiVersion: example.org/v1alpha1
+# kind: xMyBuckets
+# metadata:
+#   name: my-buckets
+# spec:
+#   location: Korea Central
