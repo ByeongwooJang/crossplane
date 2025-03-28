@@ -171,19 +171,10 @@ spec:
             toFieldPath: "spec.forProvider.defaultNodePool[0].name"
           - fromFieldPath: "spec.nodeCount"
             toFieldPath: "spec.forProvider.defaultNodePool[0].nodeCount"
-          - fromFieldPath: "spec.nodeCount"
+          - fromFieldPath: "spec.maxCount"
             toFieldPath: "spec.forProvider.defaultNodePool[0].maxCount"
-            transforms:
-              - type: math
-                math:
-                  add: 2
-          - fromFieldPath: "spec.nodeCount"
+          - fromFieldPath: "spec.minCount"
             toFieldPath: "spec.forProvider.defaultNodePool[0].minCount"
-            transforms:
-              - type: math
-                math:
-                  add: -2
-                  clampMin: 1
           - fromFieldPath: "spec.nodeSize"
             toFieldPath: "spec.forProvider.defaultNodePool[0].nodeSize"
           - fromFieldPath: "spec.subnetid"
