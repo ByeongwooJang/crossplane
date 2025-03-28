@@ -176,7 +176,7 @@ spec:
           - fromFieldPath: "spec.minCount"
             toFieldPath: "spec.forProvider.defaultNodePool[0].minCount"
           - fromFieldPath: "spec.nodeSize"
-            toFieldPath: "spec.forProvider.defaultNodePool[0].nodeSize"
+            toFieldPath: "spec.forProvider.defaultNodePool[0].vmSize"
           - fromFieldPath: "spec.subnetid"
             toFieldPath: "spec.forProvider.defaultNodePool[0].vnetSubnetId"
           - type: CombineFromComposite
