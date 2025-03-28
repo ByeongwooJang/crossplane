@@ -124,6 +124,109 @@ spec:
           - type: FromCompositeFieldPath # 생성된 리소스의 status에서 값 뺴오는 방법 -2
             fromFieldPath: status.principalId
             toFieldPath: spec.forProvider.principalId
+      - name: kubernetesCluster
+        base:
+          apiVersion: containerservice.azure.upbound.io/v1beta2
+          kind: KubernetesCluster
+          spec:
+            providerConfigRef:
+              name: workload-identity-provider-config  
+            forProvider:
+              azurePolicyEnabled: true
+              networkProfile:
+              - networkPlugin: azure
+                networkPolicy: azure
+              defaultNodePool:
+                - enableAutoScaling: true
+                  onlyCriticalAddonsEnabled: false
+                  osDiskType: Managed
+                  type: VirtualMachineScaleSets
+                  zones:
+                  - "1"
+                  - "2"
+                  - "3"
+              publicNetworkAccessEnabled: false
+              identity:
+              - type: UserAssigned
+              privateClusterEnabled: true
+              azureActiveDirectoryRoleBasedAccessControl:
+                - azureRbacEnabled: false
+                  managed: true
+              localAccountDisabled: true
+              oidcIssuerEnabled: true
+              workloadIdentityEnabled: true
+              skuTier: Standard
+        patches:
+          - type: CombineFromComposite
+            combine:
+              variables:
+                - fromFieldPath: spec.name
+              strategy: string
+              string:
+                fmt: "%s-aks"
+            toFieldPath: "metadata.name"
+          - fromFieldPath: "spec.k8sVersion"
+            toFieldPath: "spec.forProvider.kubernetesVersion"
+          - fromFieldPath: "spec.nodePoolName"
+            toFieldPath: "spec.forProvider.defaultNodePool[0].name"
+          - fromFieldPath: "spec.nodeCount"
+            toFieldPath: "spec.forProvider.defaultNodePool[0].nodeCount"
+          - fromFieldPath: "spec.nodeCount"
+            toFieldPath: "spec.forProvider.defaultNodePool[0].maxCount"
+            transforms:
+              - type: math
+                math:
+                  multiply: 1
+                  add: 2
+          - fromFieldPath: "spec.nodeCount"
+            toFieldPath: "spec.forProvider.defaultNodePool[0].minCount"
+            transforms:
+              - type: math
+                math:
+                  multiply: 1
+                  add: -2
+                  clampMin: 1
+          - fromFieldPath: "spec.nodeSize"
+            toFieldPath: "spec.forProvider.defaultNodePool[0].nodeSize"
+          - fromFieldPath: "spec.subnetid"
+            toFieldPath: "spec.forProvider.defaultNodePool[0].vnetSubnetId"
+          - type: CombineFromComposite
+            combine:
+              variables:
+                - fromFieldPath: spec.name
+              strategy: string
+              string:
+                fmt: "%s-aks"
+            toFieldPath: "spec.forProvider.dnsPrefix"
+          - type: CombineFromComposite
+            combine:
+              variables:
+                - fromFieldPath: spec.name
+              strategy: string
+              string:
+                fmt: "%s-rg"
+            toFieldPath: "spec.forProvider.nodeResourceGroup"
+          - type: FromCompositeFieldPath # 생성된 리소스의 status에서 값 뺴오는 방법 -2
+            fromFieldPath: status.managedIdentityId
+            toFieldPath: spec.forProvider.identity[0].identityIds[0]
+          - fromFieldPath: "spec.k8sAdmingroup"
+            toFieldPath: "spec.forProvider.azureActiveDirectoryRoleBasedAccessControl[0].adminGroupObjectIds[0]"
+          - fromFieldPath: "spec.location"
+            toFieldPath: "spec.forProvider.location"
+            transforms:
+              - type: map
+                map:
+                  "Korea Central": "koreacentral"
+                  "East US": "eastus"
+                  "West Europe": "westeurope"
+          - type: CombineFromComposite
+            combine:
+              variables:
+                - fromFieldPath: spec.name
+              strategy: string
+              string:
+                fmt: "%s-rg"
+            toFieldPath: "spec.forProvider.resourceGroupName"
   - step: detect-readiness
     functionRef:
       name: function-auto-ready
@@ -139,3 +242,4 @@ spec:
           - UserAssignedIdentity
           - RoleAssignmentForSubnet
           - RoleAssignmentForRg
+

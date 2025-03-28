@@ -21,30 +21,51 @@ spec:
               required:
                 - location
                 - name
-                - nodeCount
+                - subnetid
               properties:
-                subnetid:
-                  type: string
-                  description: testScope
                 location:
                   type: string
                   description: Region
+                locationCode:
+                  type: string
+                  description: Location code (Auto-generated)
+                  default: ""
                 name:
                   type: string
-                  minLength: 3            
-                  maxLength: 25           
+                  minLength: 3
+                  maxLength: 25
                   pattern: "^[a-z0-9-]+$"
                   description: Name of the K8S Cluster
+                k8sVersion:
+                  type: string
+                  description: K8S Version
+                  default: "1.31.2"
+                k8sAdmingroup:
+                  type: string
+                  description: k8s admin group
+                  default: "55f4c327-afec-46d8-bdea-55fa72447cc8"
+                nodePoolName:
+                  type: string
+                  minLength: 3
+                  maxLength: 12
+                  pattern: "^[a-z0-9]+$"
+                  description: nodepool name
+                  default: "nodepool01"
+                nodeSize:
+                  type: string
+                  minLength: 3
+                  maxLength: 25
+                  pattern: "^[a-z0-9-]+$"
+                  description: nodepool size
                 nodeCount:
                   type: integer            
                   description: "Number of nodes in the cluster"
                   minimum: 1              
                   maximum: 10             
                   default: 2
-                enableAutoScaling:
-                  type: boolean            
-                  description: "Enable auto-scaling"
-                  default: true
+                subnetid:
+                  type: string
+                  description: testScope
             status: # 생성된 리소스의 status에서 값 뺴오는 방법 -1 
               type: object
               properties:

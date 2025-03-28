@@ -1,4 +1,4 @@
-apiVersion: containerservice.azure.upbound.io/v1beta1
+apiVersion: containerservice.azure.upbound.io/v1beta2
 kind: KubernetesCluster
 metadata:
   name: qa-krce-bwjang-log-02-aks
@@ -12,8 +12,10 @@ spec:
     defaultNodePool:
       - name: qakrcebwnp
         nodeCount: 2
+        maxCount: 3
+        minCount: 1
         vmSize: Standard_D2s_v5
-        enableAutoScaling: false
+        enableAutoScaling: true
         onlyCriticalAddonsEnabled: false
         osDiskType: Managed
         type: VirtualMachineScaleSets

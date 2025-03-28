@@ -5,6 +5,9 @@ metadata:
 spec:
   location: Korea Central
   name: qa-krce-test-bwjang-cs
+  k8sVersion: 1.31.2
+  k8sAdmingroup: 55f4c327-afec-46d8-bdea-55fa72447cc8
+  nodePoolName: "qakrcsnp01"
+  nodeSize: Standard_D2s_v5
   nodeCount: 2
-  #roleAssignment, aks vnet setting
   subnetid: "/subscriptions/e1309911-b426-422a-899e-bf7fabea02a3/resourceGroups/qa-krce-test-bwjang-aks-rg/providers/Microsoft.Network/virtualNetworks/qa-krce-test-bwjang-aks-vnet/subnets/crossplane-aks-subnet"
