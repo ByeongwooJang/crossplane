@@ -176,14 +176,12 @@ spec:
             transforms:
               - type: math
                 math:
-                  multiply: 1
                   add: 2
           - fromFieldPath: "spec.nodeCount"
             toFieldPath: "spec.forProvider.defaultNodePool[0].minCount"
             transforms:
               - type: math
                 math:
-                  multiply: 1
                   add: -2
                   clampMin: 1
           - fromFieldPath: "spec.nodeSize"
