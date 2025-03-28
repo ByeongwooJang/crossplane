@@ -1,6 +1,28 @@
+
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-azure-containerservice
+spec:
+  package: xpkg.upbound.io/upbound/provider-azure-containerservice:v1 #k8s 클러스터 생성
+---
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-azure-portal
+spec:
+  package: xpkg.upbound.io/upbound/provider-family-azure:v1 #default
+---
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-azure-authorization
+spec:
+  package: xpkg.upbound.io/upbound/provider-azure-authorization:v1 #roleassginement 
+---
 apiVersion: pkg.crossplane.io/v1
 kind: Provider
 metadata:
   name: provider-azure-managedidentity
 spec:
-  package: xpkg.upbound.io/upbound/provider-azure-managedidentity:v1
+  package: xpkg.upbound.io/upbound/provider-azure-managedidentity:v1 #managed identity

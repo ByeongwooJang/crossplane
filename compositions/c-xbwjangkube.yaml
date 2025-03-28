@@ -229,7 +229,7 @@ spec:
         - sequence:
           - ResourceGroup
           - UserAssignedIdentity
-          - RoleAssignmentForSubnet
-          - RoleAssignmentForRg
-          - kubernetesCluster
+          # - RoleAssignmentForSubnet
+          # - RoleAssignmentForRg
+          # - kubernetesCluster
 
